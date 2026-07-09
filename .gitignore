@@ -1,2 +1,35 @@
-src/
-compose.versions.yaml
+# IDE / OS files
+/.buildpath
+/.cache
+/.metadata
+/.project
+/.settings
+/.vscode
+/.idea
+.DS_Store
+
+# Tools
+atlassian*
+/nbproject
+
+# Ignore everything inside src
+/src/*
+
+# Allow src folder
+!/src/
+
+# Ignore everything inside app
+/src/app/*
+
+# Allow app folder
+!/src/app/
+
+# Allow custom Magento development folders
+!/src/app/code/
+!/src/app/design/
+
+# Ignore Magento app files
+/src/app/.htaccess
+/src/app/autoload.php
+/src/app/bootstrap.php
+/src/app/etc/
