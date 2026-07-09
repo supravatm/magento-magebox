@@ -1,0 +1,53 @@
+{
+    "name": "smg/module-voucher-payment",
+    "description": "Voucher Payment is an open-source Adobe Commerce module that demonstrates modern Magento extension development through a complete voucher payment workflow.",
+    "type": "magento2-module",
+    "license": [
+        "MIT"
+    ],
+    "keywords": [
+        "adobe-commerce",
+        "magento",
+        "magento2",
+        "payment-method",
+        "offline-payment",
+        "voucher-payment",
+        "checkout-customization",
+        "checkout-fields",
+        "quote-to-order",
+        "service-contracts",
+        "rest-api",
+        "graphql",
+        "ui-components",
+        "admin-configuration",
+        "observers",
+        "plugins",
+        "database-schema",
+        "integration-tests",
+        "unit-tests",
+        "developer-training",
+        "learning-module",
+        "tutorial",
+        "ecommerce"
+    ],
+    "authors": [
+        {
+            "name": "SMG Development Team",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "php": "^8.1 || ^8.2 || ^8.3",
+        "magento/framework": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "SMG\\VoucherPayment\\": ""
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

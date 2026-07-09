@@ -1,35 +1,18 @@
-# IDE / OS files
-/.buildpath
-/.cache
-/.metadata
-/.project
-/.settings
-/.vscode
-/.idea
+# IDE / OS
 .DS_Store
+.vscode/
+.idea/
 
-# Tools
-atlassian*
-/nbproject
+# Local Docker override
+compose.versions.yaml
 
-# Ignore everything inside src
-/src/*
+# Sensitive Magento configuration
+/src/app/etc/env.php
+/src/app/etc/config.php
 
-# Allow src folder
-!/src/
-
-# Ignore everything inside app
-/src/app/*
-
-# Allow app folder
-!/src/app/
-
-# Allow custom Magento development folders
-!/src/app/code/
-!/src/app/design/
-
-# Ignore Magento app files
-/src/app/.htaccess
-/src/app/autoload.php
-/src/app/bootstrap.php
-/src/app/etc/
+# Generated / cache
+/src/generated/
+/src/vendor/
+/src/var/
+/src/pub/static/
+/src/pub/media/

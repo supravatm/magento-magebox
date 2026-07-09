@@ -1,0 +1,57 @@
+{
+  "name": "supravatm/magento2-module-fake-data-api",
+  "description": "A lightweight and non-intrusive(no DB bloat unless you extend it to save) Magento 2 module to generate fake customers, products, and orders via GraphQL & REST APIs.",
+  "type": "magento2-module",
+  "license": [
+        "MIT"
+    ],
+  "authors": [
+    {
+      "name": "Supravat Mondal",
+      "email": "supravat.com@email.com",
+      "homepage": "https://github.com/supravatm", 
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7||^8",
+    "magento/framework": "^103",
+    "fakerphp/faker": "^1.21"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "SMG\\MockDataGenerator\\": ""
+    }
+  },
+  "extra": {
+    "map": [
+      [
+        "*",
+        "SMG/MockDataGenerator"
+      ]
+    ]
+  },
+  "keywords": [
+    "magento2",
+    "graphql",
+    "mock-data",
+    "test-data",
+    "sample-data",
+    "fake-data",
+    "data-faker",
+    "orders",
+    "products",
+    "customers",
+    "dev-tools",
+    "testing",
+    "development-only"
+  ]
+}

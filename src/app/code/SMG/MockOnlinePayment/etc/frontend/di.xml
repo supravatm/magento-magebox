@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Payment\Model\CcGenericConfigProvider">
+        <arguments>
+            <argument name="methodCodes" xsi:type="array">
+                <item name="mockonlinepayment" xsi:type="const">SMG\MockOnlinePayment\Model\Config::METHOD_CODE</item>
+            </argument>
+        </arguments>
+    </type>
+</config>   

@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Framework:ObjectManager/etc/config.xsd">
+
+  <!-- Payment Method Facade configuration -->
+    <virtualType name="MockOnlinePaymentFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">SMG\MockOnlinePayment\Model\Config::METHOD_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">mockOnlinePaymentValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">MockCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader -->
+     <!-- Value Handler Pool Configuration -->
+    <virtualType name="mockOnlinePaymentValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">mockOnlinePaymentConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Config Value Handler -->
+    <virtualType name="mockOnlinePaymentConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">mockOnlinePaymentConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Reader for custom payment settings -->
+    <virtualType name="mockOnlinePaymentConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">SMG\MockOnlinePayment\Model\Config::METHOD_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <!--Start MockCommandPool-->
+    <virtualType name="MockCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">MockAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">MockCaptureCommand</item>
+                <item name="refund" xsi:type="string">MockRefundCommand</item>
+                <item name="void" xsi:type="string">MockVoidCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MockAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">MockAuthorizeRequestBuilder</argument>
+            <argument name="transferFactory" xsi:type="object">MockTransferFactory</argument>
+            <argument name="client" xsi:type="object">MockGatewayClient</argument>
+            <argument name="handler" xsi:type="object">MockResponseHandler</argument>
+            <argument name="validator" xsi:type="object">MockValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MockCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">MockCaptureRequestBuilder</argument>
+            <argument name="transferFactory" xsi:type="object">MockTransferFactory</argument>
+            <argument name="client" xsi:type="object">MockGatewayClient</argument>
+            <argument name="handler" xsi:type="object">MockResponseHandler</argument>
+            <argument name="validator" xsi:type="object">MockValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MockRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">MockRefundRequestBuilder</argument>
+            <argument name="transferFactory" xsi:type="object">MockTransferFactory</argument>
+            <argument name="client" xsi:type="object">MockGatewayClient</argument>
+            <argument name="handler" xsi:type="object">MockResponseHandler</argument>
+            <argument name="validator" xsi:type="object">MockValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MockVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">MockVoidRequestBuilder</argument>
+            <argument name="transferFactory" xsi:type="object">MockTransferFactory</argument>
+            <argument name="client" xsi:type="object">MockGatewayClient</argument>
+            <argument name="handler" xsi:type="object">MockResponseHandler</argument>
+            <argument name="validator" xsi:type="object">MockValidator</argument>
+        </arguments>
+    </virtualType>
+    
+
+    <virtualType name="MockAuthorizeRequestBuilder" 
+        type="SMG\MockOnlinePayment\Gateway\Request\MockAuthorizeRequestBuilder" />
+    <virtualType name="MockCaptureRequestBuilder" 
+        type="SMG\MockOnlinePayment\Gateway\Request\MockCaptureRequestBuilder" />
+    <virtualType name="MockRefundRequestBuilder" 
+        type="SMG\MockOnlinePayment\Gateway\Request\MockRefundRequestBuilder" />
+    <virtualType name="MockVoidRequestBuilder" 
+        type="SMG\MockOnlinePayment\Gateway\Request\MockVoidRequestBuilder" />
+    <virtualType name="MockTransferFactory" 
+        type="SMG\MockOnlinePayment\Gateway\Http\MockTransfer" />
+    <virtualType name="MockGatewayClient" 
+        type="SMG\MockOnlinePayment\Gateway\Http\MockGatewayClient" />
+    <virtualType name="MockValidator" 
+        type="SMG\MockOnlinePayment\Gateway\Validator\MockValidator" />
+    <virtualType name="MockResponseHandler" 
+        type="SMG\MockOnlinePayment\Gateway\Response\MockResponseHandler" />
+    <!--End MockCommandPool-->
+
+
+
+    <!-- Configure the Custom Logger -->
+    <virtualType name="SMG\MockOnlinePayment\Model\VirtualLoggerHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/mock-payment-debug.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="SMG\MockOnlinePayment\Model\VirtualLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLoggerHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+
+    <type name="SMG\MockOnlinePayment\Gateway\Request\MockAuthorizeRequestBuilder">
+        <arguments>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+    <type name="SMG\MockOnlinePayment\Gateway\Request\MockCaptureRequestBuilder">
+        <arguments>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+    <type name="SMG\MockOnlinePayment\Gateway\Request\MockRefundRequestBuilder">
+        <arguments>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+    <type name="SMG\MockOnlinePayment\Gateway\Request\MockVoidRequestBuilder">
+        <arguments>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+    <type name="SMG\MockOnlinePayment\Gateway\Http\MockTransfer">
+        <arguments>
+            <argument name="config" xsi:type="object">mockOnlinePaymentConfig</argument>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+    <type name="SMG\MockOnlinePayment\Gateway\Http\MockGatewayClient">
+        <arguments>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+    <type name="SMG\MockOnlinePayment\Gateway\Validator\MockValidator">
+        <arguments>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+    <type name="SMG\MockOnlinePayment\Gateway\Response\MockResponseHandler">
+        <arguments>
+            <argument name="logger" xsi:type="object">SMG\MockOnlinePayment\Model\VirtualLogger</argument>
+        </arguments>
+    </type>
+</config>
