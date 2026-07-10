@@ -2,12 +2,15 @@
 .DS_Store
 .vscode/
 .idea/
-
+CHANGELOG.md
+LICENSE.md
+README.md
+template/
 # Local Docker override
 compose.versions.yaml
 
 # Sensitive Magento configuration
-src/
+src
 
 !src/app/code/
 !src/app/code/*
