@@ -7,12 +7,14 @@
 compose.versions.yaml
 
 # Sensitive Magento configuration
-/src/app/etc/env.php
-/src/app/etc/config.php
+src/
 
-# Generated / cache
-/src/generated/
-/src/vendor/
-/src/var/
-/src/pub/static/
-/src/pub/media/
+!src/app/code/
+!src/app/design/
+!src/app/etc/config.php
+!src/app/etc/db_schema.xml
+!src/app/etc/di.xml
+!src/composer.json
+!src/composer.lock
+!src/.user.ini
+!/src/.editorconfig
