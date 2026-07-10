@@ -33,3 +33,6 @@ compose.versions.yaml
 !/src/composer.lock
 !/src/.user.ini
 !/src/.editorconfig
+
+# Ignore macOS files everywhere
+**/.DS_Store
