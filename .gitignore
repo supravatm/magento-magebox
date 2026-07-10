@@ -10,6 +10,7 @@ compose.versions.yaml
 src/
 
 !src/app/code/
+!src/app/code/*
 !src/app/design/
 !src/app/etc/config.php
 !src/app/etc/db_schema.xml
