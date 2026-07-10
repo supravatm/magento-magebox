@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add 
+            id="SMG_VoucherPayment::voucher_payment" 
+            title="Voucher Payment" 
+            translate="title" 
+            sortOrder="100" 
+            module="SMG_VoucherPayment" 
+            parent="Magento_CatalogRule::promo" 
+            action="voucher_payment/"
+            dependsOnModule="Magento_Sales"
+            resource="SMG_VoucherPayment::voucher_payment"/>
+    </menu>
+</config>

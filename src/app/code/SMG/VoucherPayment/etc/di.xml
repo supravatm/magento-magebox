@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Framework:ObjectManager/etc/config.xsd">
+
+  <!-- Payment Method Facade configuration -->
+    <virtualType name="VoucherPaymentFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">SMG\VoucherPayment\Model\Config::PAYMENT_METHOD_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">voucherPaymentValueHandlerPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader -->
+     <!-- Value Handler Pool Configuration -->
+    <virtualType name="voucherPaymentValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">voucherPaymentConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Config Value Handler -->
+    <virtualType name="voucherPaymentConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">voucherPaymentConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Reader for custom payment settings -->
+    <virtualType name="voucherPaymentConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">SMG\VoucherPayment\Model\Config::PAYMENT_METHOD_CODE</argument>
+        </arguments>
+    </virtualType>
+
+
+    <!-- Plugin to save voucher_number to PaymentInformationManagement -->
+    <type name="Magento\Checkout\Model\PaymentInformationManagement">
+      <plugin name="save_voucher_number" 
+        type="SMG\VoucherPayment\Plugin\PaymentInformationManagementPlugin"/>
+    </type>
+    
+    <!--Copy Quote Payment field coppy to sales_order_payment -->
+    <type name="Magento\Quote\Model\Quote\Payment\ToOrderPayment">
+        <plugin name="voucher_payment_to_order" 
+            type="SMG\VoucherPayment\Plugin\ToOrderPaymentPlugin"/>
+    </type>
+
+    <type name="Magento\Payment\Block\Info">
+        <plugin name="voucher_payment_info" 
+            type="SMG\VoucherPayment\Plugin\PaymentInfoPlugin"/>
+    </type>
+
+
+    <preference for="SMG\VoucherPayment\Api\VoucherRepositoryInterface" 
+        type="SMG\VoucherPayment\Model\VoucherRepository"/>
+    <preference for="SMG\VoucherPayment\Api\Data\VoucherInterface" 
+        type="SMG\VoucherPayment\Model\Voucher"/>
+    <preference for="SMG\VoucherPayment\Api\VoucherManagementInterface" 
+        type="SMG\VoucherPayment\Model\VoucherManagement"/>
+     
+
+    <!--Grid collection-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="voucher_listing_data_source" xsi:type="string">
+                    SMG\VoucherPayment\Model\ResourceModel\Voucher\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="SMG\VoucherPayment\Model\ResourceModel\Voucher\Grid\Collection" 
+        type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">smg_voucher</argument>
+            <argument name="resourceModel" xsi:type="string">SMG\VoucherPayment\Model\ResourceModel\Voucher</argument>
+        </arguments>
+    </virtualType>
+    <!-- END Grid collection-->
+</config>

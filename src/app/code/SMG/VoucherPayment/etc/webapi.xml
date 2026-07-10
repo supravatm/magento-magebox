@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!--For Customer-->
+    <route url="/V1/voucher-payment/validate/:voucherNumber" method="GET">
+        <service class="SMG\VoucherPayment\Api\VoucherManagementInterface" method="validate"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/voucher-payment/use" method="POST">
+        <service class="SMG\VoucherPayment\Api\VoucherManagementInterface" method="markAsUsed"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+
+    <!--For Admin -->
+    <!--1. Signle generate  -->
+    <route url="/V1/voucher-payment/generate" method="POST">
+        <service class="SMG\VoucherPayment\Api\VoucherManagementInterface" method="generate"/>
+        <resources>
+            <resource ref="SMG_VoucherPayment::voucher_payment"/>
+        </resources>
+    </route>
+    <!--2. Bulk generate -->
+    <route url="/V1/voucher-payment/bulk-generate" method="POST">
+        <service class="SMG\VoucherPayment\Api\VoucherManagementInterface" method="bulkGenerate"/>
+        <resources>
+            <resource ref="SMG_VoucherPayment::voucher_payment"/>
+        </resources>
+    </route>
+    <!--3. Bulk voucher delete-->
+    <route url="/V1/voucher-payment/bulk-delete" method="POST">
+        <service class="SMG\VoucherPayment\Api\VoucherManagementInterface" method="bulkDelete"/>
+        <resources>
+            <resource ref="SMG_VoucherPayment::voucher_payment"/>
+        </resources>
+    </route>
+    <!--4. Bulk Update Inventory by voucher-code -->
+    <route url="/V1/voucher-payment/bulk-update" method="POST">
+        <service class="SMG\VoucherPayment\Api\VoucherManagementInterface" method="bulkUpdate"/>
+        <resources>
+            <resource ref="SMG_VoucherPayment::voucher_payment"/>
+        </resources>
+    </route>
+    
+</routes>

@@ -3,22 +3,33 @@
 .vscode/
 .idea/
 CHANGELOG.md
-LICENSE.md
-README.md
 template/
 # Local Docker override
 compose.versions.yaml
 
 # Sensitive Magento configuration
-src
+/src/*
 
-!src/app/code/
-!src/app/code/*
-!src/app/design/
-!src/app/etc/config.php
-!src/app/etc/db_schema.xml
-!src/app/etc/di.xml
-!src/composer.json
-!src/composer.lock
-!src/.user.ini
+# Allow required parent directories
+!/src/app/
+!/src/app/code/
+!/src/app/design/
+!/src/app/etc/
+!/src/app/etc/env.php
+
+# Track everything inside app/code
+!/src/app/code/**
+
+# Track everything inside app/design
+!/src/app/design/**
+
+# Track specific app/etc files
+!/src/app/etc/config.php
+!/src/app/etc/db_schema.xml
+!/src/app/etc/di.xml
+
+# Track root files
+!/src/composer.json
+!/src/composer.lock
+!/src/.user.ini
 !/src/.editorconfig
